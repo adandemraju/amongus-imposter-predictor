@@ -33,7 +33,7 @@ def preprocess(df):
     #create is_imposter column as 1/0 column from team column
     df['is_imposter'] = df['Team'].map({'Imposter':1, 'Crewmate': 0})
 
-    features = ['All Tasks Completed', 'Ejected', 'Sabotages Fixed', 'Game Length (s)', 'Task Time (s)']
+    features = ['All Tasks Completed', 'Ejected', 'Sabotages Fixed', 'Game Length (s)', 'Task Time (s)', 'is_imposter']
     df_clean = df[features]
 
     return df_clean
@@ -68,10 +68,10 @@ def save_model(model, path):
     joblib.dump(model, os.path.join(path, "model.joblib"))
 
 def main():
-    data = load_data("../data")
+    data = load_data("data/raw data")
     cleaned_data = preprocess(data)
     trained_model, accuracy, confusion = train(cleaned_data)
-    save_model(trained_model, "../model")
+    save_model(trained_model, "models")
 
 if __name__ == "__main__":
     main()
